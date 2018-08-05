@@ -57,13 +57,21 @@ export class BasicTextBuffer implements TextBuffer {
             const n = table.length;
 
             for (let i = 0; i < n; i++) {
-                if (i === (n - 1)) {
+                if (n === 1) {
+                    const chars = text.split('');
+
                     for (let j = 0; j < table[i].length; j++) {
-                        endPos.line = lastChangedLine + i;
+                        endPos.column = lastChangedCol + j + 1;
+                        const ch = chars[j];
+                        this.table[lastChangedLine + i].splice(j + lastChangedCol, 0, ch);
+                    }
+                } else if (i === (n - 1)) {
+                    endPos.line = lastChangedLine + i;
+                    for (let j = 0; j < table[i].length; j++) {
                         endPos.column = lastChangedCol + j + 1;
                         const ch = table[i][j];
 
-                        this.table[lastChangedLine + i].splice(lastChangedCol + j, 0, ch);
+                        this.table[lastChangedLine + i].splice(j, 0, ch);
                     }
                 } else {
                     if (i === 0) {
@@ -228,24 +236,35 @@ export class BasicTextBuffer implements TextBuffer {
                 if (i === (n - 1)) {
                     for (let j = 0; j < table[i].length; j++) {
                         const ch = table[i][j];
-                        this.table[line].splice(column + j, 0, ch);
+                        this.table[line].splice(j, 0, ch);
                     }
                 } else {
                     if (i === 0) {
 
-                        const chars = [];
+                        if (column >= this.getColumnCount(line)) {
 
-                        //
-                        // Build up a char buffer for columns
-                        // that may exist in text before the starting
-                        // column.
-                        //
-                        for (let j = 0; j < column; j++) {
-                            chars.push(this.table[line][0]);
-                            this.table[line].splice(0, 1);
+                            const chars = [];
+
+                            //
+                            // Build up a char buffer for columns
+                            // that may exist in text before the starting
+                            // column.
+                            //
+                            for (let j = 0; j < column; j++) {
+                                chars.push(this.table[line][0]);
+                                this.table[line].splice(0, 1);
+                            }
+
+                            this.table.splice(line++, 0, chars.concat(table[i]));
+                        } else {
+                            const previousRules = [];
+                            for (let j = 0; j < column; j++) {
+                                // Insert at starting range column
+                                previousRules.push(this.table[line][0]);
+                                this.table[line].splice(0, 1);
+                            }
+                            this.table.splice(line++, 0, previousRules.concat(table[i]));
                         }
-
-                        this.table.splice(line++, 0, chars.concat(table[i]));
                     } else {
                         this.table.splice(line, 0, table[i]);
                         line++;

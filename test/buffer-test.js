@@ -63,6 +63,25 @@ describe('Test TextBuffer methods', function () {
     });
 
     describe('#replaceRange()', () => {
+        it('DEBUG', () => {
+            const buffer = textModule.createBuffer('abc\nefg');
+
+            const range = textModule.createTextRange({column: 1, line: 0}, {column: 1, line: 1});
+            buffer.replaceRange(range, 'replaced!\nline');
+
+            const data = buffer.getText();
+            data.should.equal('areplaced!\nlinefg');
+        });
+        it('Should insert "replaced!\nline"', () => {
+            const buffer = textModule.createBuffer('abc\nefg');
+
+            const range = textModule.createTextRange({column: 1, line: 0}, {column: 1, line: 1});
+            buffer.insertText(1, 0, 'replaced!\nline');
+
+            const data = buffer.getText();
+            data.should.equal('areplaced!\nlinebc\nefg');
+        });
+
         it('Should replace "World"', () => {
             const buffer = textModule.createBuffer('Hello, World\n');
             const range = textModule.createTextRange({column: 7, line: 0}, {column: 12, line: 0});

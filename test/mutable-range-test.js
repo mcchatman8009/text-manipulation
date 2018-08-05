@@ -8,6 +8,15 @@ chai.should();
 describe('Test MutableRange', function () {
 
     describe('Test Changing Range', () => {
+        it('The Range be changed to "Hey World\n"', () => {
+            const buffer = textModule.createBuffer('Hello, Alex\nHello, World\n');
+            const range = new MutableRange([{column: 0, line: 0}, {column: 13, line: 2}], buffer);
+
+            range.setText("Hey World\n");
+
+            range.getText().should.equal("Hey World\n");
+            buffer.getLine(0).should.equal("Hey World");
+        });
         it('The Range should have "Hey World"', () => {
             const buffer = textModule.createBuffer('Hello, Alex\nHello, World\n');
             const range = new MutableRange([{column: 0, line: 0}, {column: 13, line: 0}], buffer);
