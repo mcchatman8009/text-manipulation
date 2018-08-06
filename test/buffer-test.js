@@ -63,7 +63,7 @@ describe('Test TextBuffer methods', function () {
     });
 
     describe('#replaceRange()', () => {
-        it('DEBUG', () => {
+        it('Should be "areplaced!\nlinefg"', () => {
             const buffer = textModule.createBuffer('abc\nefg');
 
             const range = textModule.createTextRange({column: 1, line: 0}, {column: 1, line: 1});

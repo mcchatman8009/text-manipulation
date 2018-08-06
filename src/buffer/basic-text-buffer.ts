@@ -240,31 +240,20 @@ export class BasicTextBuffer implements TextBuffer {
                     }
                 } else {
                     if (i === 0) {
+                        const chars = [];
 
-                        if (column >= this.getColumnCount(line)) {
-
-                            const chars = [];
-
-                            //
-                            // Build up a char buffer for columns
-                            // that may exist in text before the starting
-                            // column.
-                            //
-                            for (let j = 0; j < column; j++) {
-                                chars.push(this.table[line][0]);
-                                this.table[line].splice(0, 1);
-                            }
-
-                            this.table.splice(line++, 0, chars.concat(table[i]));
-                        } else {
-                            const previousRules = [];
-                            for (let j = 0; j < column; j++) {
-                                // Insert at starting range column
-                                previousRules.push(this.table[line][0]);
-                                this.table[line].splice(0, 1);
-                            }
-                            this.table.splice(line++, 0, previousRules.concat(table[i]));
+                        //
+                        // Build up a char buffer for columns
+                        // that may exist in text before the starting
+                        // column.
+                        //
+                        for (let j = 0; j < column; j++) {
+                            chars.push(this.table[line][0]);
+                            this.table[line].splice(0, 1);
                         }
+
+                        this.table.splice(line++, 0, chars.concat(table[i]));
+
                     } else {
                         this.table.splice(line, 0, table[i]);
                         line++;
