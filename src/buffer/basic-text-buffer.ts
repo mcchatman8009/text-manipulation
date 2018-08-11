@@ -101,19 +101,20 @@ export class BasicTextBuffer implements TextBuffer {
         let prefixChars: string[] = [];
 
         for (let i = start.line; i <= end.line; i++) {
+            if (i > start.line) {
+                if (this.isLineEmpty(line)) {
+                    this.removeLine(line);
+                }
+            }
+
             const colEnd = (i === end.line) ? end.column : this.getColumnCount(line);
 
             for (let col = startCol; col < colEnd; col++) {
                 this.removeColumn(startCol, line);
             }
 
-            if (this.isLineEmpty(line)) {
-                const singleLine = i === end.line && i === 0;
+            if (!this.isLineEmpty(line)) {
 
-                if (!singleLine) {
-                    this.removeLine(line);
-                }
-            } else {
                 if (i !== end.line) {
                     prefixChars = this.table[line];
                     this.removeLine(line);

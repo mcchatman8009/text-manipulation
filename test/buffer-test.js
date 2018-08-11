@@ -151,7 +151,7 @@ describe('Test TextBuffer methods', function () {
             buffer.replaceRange(range, 'Hello, World');
 
             const data = buffer.getText();
-            data.should.equal('\nHello, World');
+            data.should.equal('\nHello, World\n');
         });
 
         it('Should have text that contains "Hello, World"', () => {
