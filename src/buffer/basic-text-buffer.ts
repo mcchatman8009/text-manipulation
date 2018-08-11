@@ -52,7 +52,7 @@ export class BasicTextBuffer implements TextBuffer {
             const lastChangedCol = removePosition.column;
 
             const startPos = {column: lastChangedCol, line: lastChangedLine};
-            const endPos = {column: 0, line: 0};
+            const endPos = {column: 0, line: lastChangedLine};
 
             const n = table.length;
 

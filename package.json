@@ -1,6 +1,6 @@
 {
   "name": "text-manipulation",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A NPM library that assists in text range manipulation",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
