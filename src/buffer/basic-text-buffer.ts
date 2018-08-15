@@ -261,7 +261,7 @@ export class BasicTextBuffer implements TextBuffer {
                     }
                 }
             }
-        } else {
+        } else if (this.table[line]) {
             const chars = text.split('');
 
             for (let i = 0; i < chars.length; i++) {
@@ -273,7 +273,9 @@ export class BasicTextBuffer implements TextBuffer {
     }
 
     removeColumn(column: number, line: number) {
-        this.table[line].splice(column, 1);
+        if (this.table[line]) {
+            this.table[line].splice(column, 1);
+        }
     }
 
     getColumnRange(columnStart: number, columnEnd: number, line: number): string {
