@@ -175,7 +175,7 @@ export class BasicTextBuffer implements TextBuffer {
     }
 
     isLineEmpty(line: number): boolean {
-        return this.table[line].length === 0;
+        return this.table[line] && this.table[line].length === 0;
     }
 
     replaceTextInLine(line: number, lineText: string) {
