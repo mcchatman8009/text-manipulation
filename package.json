@@ -1,11 +1,11 @@
 {
   "name": "text-manipulation",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "A NPM library that assists in text range manipulation",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --sourceMap false",
     "build-docs": "typedoc --theme markdown --mdHideSources --out docs --includes ./src",
     "clean": "rm -rf dist",
     "lint": "tslint -p . -c tslint.json 'src/**/*.ts'",
