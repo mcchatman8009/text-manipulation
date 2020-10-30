@@ -101,11 +101,6 @@ export class BasicTextBuffer implements TextBuffer {
         let prefixChars: string[] = [];
 
         for (let i = start.line; i <= end.line; i++) {
-            if (i > start.line) {
-                if (this.isLineEmpty(line)) {
-                    this.removeLine(line);
-                }
-            }
 
             const colEnd = (i === end.line) ? end.column : this.getColumnCount(line);
 
@@ -113,7 +108,7 @@ export class BasicTextBuffer implements TextBuffer {
                 this.removeColumn(startCol, line);
             }
 
-            if (!this.isLineEmpty(line)) {
+            if (!this.isLineEmpty(line) || i === end.line) {
 
                 if (i !== end.line) {
                     prefixChars = this.table[line];
@@ -122,6 +117,8 @@ export class BasicTextBuffer implements TextBuffer {
                 } else {
                     this.table[line] = prefixChars.concat(this.table[line]);
                 }
+            } else {
+                this.removeLine(line);
             }
         }
 

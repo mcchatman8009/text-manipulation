@@ -154,6 +154,24 @@ describe('Test TextBuffer methods', function () {
             data.should.equal('\nHello, World\n');
         });
 
+        it('Should have text that contains "\nHello,\nWorld"', () => {
+            const buffer = textModule.createBuffer('\nHello,\n\nWorld');
+            const range = textModule.createTextRange({column: 6, line: 1}, {column: 0, line: 2});
+            buffer.replaceRange(range, '');
+
+            const data = buffer.getText();
+            data.should.equal('\nHello,\nWorld');
+        });
+
+        it('Should have text that contains "\nHello,\nWorld"', () => {
+            const buffer = textModule.createBuffer('\nHello,\n\nWorld');
+            const range = textModule.createTextRange({column: 0, line: 2}, {column: 0, line: 3});
+            buffer.replaceRange(range, '');
+
+            const data = buffer.getText();
+            data.should.equal('\nHello,\nWorld');
+        });
+
         it('Should have text that contains "Hello, World"', () => {
             const buffer = textModule.createBuffer('');
             const range = textModule.createTextRange({column: 0, line: 0}, {column: 0, line: 0});
