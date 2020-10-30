@@ -136,8 +136,9 @@ export class BasicTextBuffer implements TextBuffer {
         for (let line = start.line; line <= end.line; line++) {
             const colEnd = (line === end.line) ? end.column : this.getColumnCount(line);
             const chars = [];
+            const colStart = (line === start.line)  ? start.column : 0;
 
-            for (let col = start.column; col < colEnd; col++) {
+            for (let col = colStart; col < colEnd; col++) {
                 const ch = this.charAt(col, line);
 
                 if (ch !== undefined) {
